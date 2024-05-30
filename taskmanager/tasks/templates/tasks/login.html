@@ -1,0 +1,65 @@
+{% extends "tasks/base.html" %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="max-w-md mx-auto my-10">
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-3xl font-semibold text-center mb-6">Login</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+                    <input type="text" id="username" name="username" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                    <input type="password" id="password" name="password" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mt-4">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Additional Animation */
+    @keyframes floating {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(8px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .floating-animation {
+        animation: floating 2s ease-in-out infinite;
+    }
+
+    /* Explicitly set button background and text color */
+    button {
+        background-color: #4c51bf; /* Blue */
+        color: #fff; /* White */
+    }
+
+    /* Explicitly set text color for input fields */
+    input[type="text"],
+    input[type="password"] {
+        color: #333; /* Dark grey */
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+    anime({
+        targets: '.bg-white',
+        translateY: [-50, 0],
+        opacity: [0, 1],
+        duration: 1000,
+        easing: 'easeInOutQuad'
+    });
+</script>
+{% endblock %}

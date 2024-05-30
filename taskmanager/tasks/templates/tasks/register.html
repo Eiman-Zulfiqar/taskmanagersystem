@@ -1,0 +1,79 @@
+{% extends "tasks/base.html" %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="max-w-md mx-auto my-10">
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-3xl font-semibold text-center mb-6">Register</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+                    <input type="text" id="username" name="username" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email Address:</label>
+                    <input type="email" id="email" name="email" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password1" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                    <input type="password" id="password1" name="password1" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="mb-6">
+                    <label for="password2" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password:</label>
+                    <input type="password" id="password2" name="password2" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mt-4" style="background-color: #3490dc !important;">Register</button>
+            </form>
+        </div>
+        <h3>Registration Constraints:</h3>
+    <ul>
+        <li>Username must be unique and can contain letters, digits, and @/./+/-/_ characters.</li>
+        <li>Username should be 150 characters or fewer.</li>
+        <li>Password must be at least 8 characters long.</li>
+        <li>Password should not be too common.</li>
+        <li>Password should not be entirely numeric.</li>
+        {% if form.errors %}
+            <h4>Errors:</h4>
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </ul>
+    </div>
+</div>
+
+<style>
+    /* Additional Animation */
+    @keyframes floating {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(8px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .floating-animation {
+        animation: floating 2s ease-in-out infinite;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+    anime({
+        targets: '.bg-white',
+        translateY: [-50, 0],
+        opacity: [0, 1],
+        duration: 1000,
+        easing: 'easeInOutQuad'
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "tasks/base.html" %}
+
+{% block content %}
+<div class="container mx-auto">
+    <div class="max-w-md mx-auto my-10">
+        <h2 id="form-title" class="text-3xl font-semibold text-center mb-6">Create/Edit Task</h2>
+        <form id="task-form" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
+                <input type="text" id="title" name="title" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                <textarea id="description" name="description" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="due_date" class="block text-gray-700 text-sm font-bold mb-2">Due Date:</label>
+                <input type="date" id="due_date" name="due_date" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="assigned_user" class="block text-gray-700 text-sm font-bold mb-2">Assigned User:</label>
+                <input type="text" id="assigned_user" name="assigned_user" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
+            <div class="mb-4">
+                <label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status:</label>
+                <select id="status" name="status" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <option value="incomplete">Incomplete</option>
+                    <option value="complete">Complete</option>
+                </select>
+            </div>
+            <button id="submit-btn" type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4 transition duration-300 ease-in-out">Submit</button>
+        </form>
+        {% if form.errors %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-4" role="alert">
+            <ul>
+                {% for field in form %}
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    /* Additional Animation */
+    @keyframes floating {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(8px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .floating-animation {
+        animation: floating 2s ease-in-out infinite;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+    // Example animation with Anime.js
+    anime({
+        targets: '#form-title',
+        translateY: [-50, 0],
+        opacity: [0, 1],
+        duration: 1000,
+        easing: 'easeInOutQuad'
+    });
+
+    // Apply floating animation to the submit button
+    const submitButton = document.getElementById('submit-btn');
+    submitButton.classList.add('floating-animation');
+</script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "tasks/base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2 class="fadeInDown">Tasks</h2>
+    </div>
+    <div class="col-md-4 text-right">
+        <a href="{% url 'task-create' %}" class="btn btn-primary fadeInRight">Create Task</a>
+    </div>
+</div>
+<form method="GET" class="mt-3 fadeInUp">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <select name="status" class="form-control">
+                <option value="">All</option>
+                <option value="incomplete">Incomplete</option>
+                <option value="complete">Complete</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <select name="sort_by" class="form-control">
+                <option value="">Sort By</option>
+                <option value="due_date">Due Date</option>
+                <option value="title">Title</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+<ul class="list-group mt-3">
+    {% for task in tasks %}
+    <li class="list-group-item d-flex justify-content-between align-items-center fadeIn">
+        <span>{{ task.title }}</span>
+        <span>{{ task.due_date }}</span>
+        <span class="badge badge-{{ task.status|lower }}">{{ task.status }}</span>
+        <div>
+            <a href="{% url 'task-update' task.id %}" class="btn btn-sm btn-primary mr-2 fadeInLeft">Edit</a>
+            <a href="{% url 'task-delete' task.id %}" class="btn btn-sm btn-danger fadeInLeft">Delete</a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
